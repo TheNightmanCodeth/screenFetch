@@ -228,7 +228,7 @@ detectColors () {
 	my_hcolor=$(colorNumberToCode "${my_hcolor}")
 }
 
-supported_distros="Alpine Linux, Antergos, Arch Linux (Old and Current Logos), blackPanther OS, BLAG, BunsenLabs, CentOS, Chakra, Chapeau, Chrome OS, Chromium OS, CrunchBang, CRUX, Debian, Deepin, DesaOS,Devuan, Dragora, elementary OS, Evolve OS, Exherbo, Fedora, Frugalware, Fuduntu, Funtoo, Fux, Gentoo, gNewSense, GuixSD, Jiyuu Linux, Kali Linux, KaOS, KDE neon, Kogaion, Korora, LinuxDeepin, Linux Mint, LMDE, Logos, Mageia, Mandriva/Mandrake, Manjaro, Mer, Netrunner, NixOS, OBRevenge, openSUSE, Oracle Linux, Parabola GNU/Linux-libre, Pardus, Parrot Security, PCLinuxOS, PeppermintOS, Qubes OS, Raspbian, Red Hat Enterprise Linux, ROSA, Sabayon, SailfishOS, Scientific Linux, Slackware, Solus, SparkyLinux, SteamOS, SUSE Linux Enterprise, SwagArch, TinyCore, Trisquel, Ubuntu, Viperr, Void and Zorin OS."
+supported_distros="Alpine Linux, Antergos, Arch Linux (Old and Current Logos), blackPanther OS, BLAG, BunsenLabs, CentOS, Chakra, Chapeau, Chrome OS, Chromium OS, CrunchBang, CRUX, Debian, Deepin, DesaOS,Devuan, Dragora, elementary OS, Evolve OS, Exherbo, Fedora, Frugalware, Fuduntu, Funtoo, Fux, Gentoo, CloverOS, gNewSense, GuixSD, Jiyuu Linux, Kali Linux, KaOS, KDE neon, Kogaion, Korora, LinuxDeepin, Linux Mint, LMDE, Logos, Mageia, Mandriva/Mandrake, Manjaro, Mer, Netrunner, NixOS, OBRevenge, openSUSE, Oracle Linux, Parabola GNU/Linux-libre, Pardus, Parrot Security, PCLinuxOS, PeppermintOS, Qubes OS, Raspbian, Red Hat Enterprise Linux, ROSA, Sabayon, SailfishOS, Scientific Linux, Slackware, Solus, SparkyLinux, SteamOS, SUSE Linux Enterprise, SwagArch, TinyCore, Trisquel, Ubuntu, Viperr, Void and Zorin OS."
 supported_other="Dragonfly/Free/Open/Net BSD, Haiku, Mac OS X, Windows+Cygwin and Windows+MSYS2."
 supported_dms="KDE, GNOME, Unity, Xfce, LXDE, Cinnamon, MATE, Deepin, CDE, RazorQt and Trinity."
 supported_wms="2bwm, 9wm, Awesome, Beryl, Blackbox, Cinnamon, chromeos-wm, Compiz, deepin-wm, dminiwm, dwm, dtwm, E16, E17, echinus, Emerald, FluxBox, FLWM, FVWM, herbstluftwm, howm, IceWM, KWin, Metacity, monsterwm, Musca, Gala, Mutter, Muffin, Notion, OpenBox, PekWM, Ratpoison, Sawfish, ScrotWM, SpectrWM, StumpWM, subtle, sway, TWin, WindowMaker, WMFS, wmii, Xfwm4, XMonad and i3."
@@ -486,6 +486,10 @@ detectdistro () {
         				~*)     distro_release=testing      ;;
         				'**')   distro_release=experimental ;; #experimental usually includes git-versions.
 					esac
+					;;
+				"CloverOS")
+					distro="CloverOS"
+					distro_codename=null
 					;;
 				"LinuxDeepin")
 					distro="LinuxDeepin"
@@ -923,6 +927,7 @@ detectdistro () {
 		funtoo) distro="Funtoo" ;;
 		fux) distro="Fux" ;;
 		gentoo) distro="Gentoo" ;;
+		CloverOS) distro="CloverOS" ;;
 		gnewsense) distro="gNewSense" ;;
 		guixsd) distro="GuixSD" ;;
 		haiku) distro="Haiku" ;;
@@ -1074,7 +1079,7 @@ detectpkgs () {
 		'Frugalware') pkgs=$(pacman-g2 -Q | wc -l) ;;
 		'Debian'|'Ubuntu'|'Mint'|'Fuduntu'|'KDE neon'|'Devuan'|'Raspbian'|'LMDE'|'CrunchBang'|'Peppermint'|'LinuxDeepin'|'Deepin'|'Kali Linux'|'Trisquel'|'elementary OS'|'gNewSense'|'BunsenLabs'|'SteamOS'|'Parrot Security'|'GrombyangOS'|'DesaOS'|'Zorin OS') pkgs=$(dpkg -l | grep -c ^i) ;;
 		'Slackware') pkgs=$(ls -1 /var/log/packages | wc -l) ;;
-		'Gentoo'|'Sabayon'|'Funtoo'|'Kogaion') pkgs=$(ls -d /var/db/pkg/*/* | wc -l) ;;
+		'Gentoo'|'CloverOS'|'Sabayon'|'Funtoo'|'Kogaion') pkgs=$(ls -d /var/db/pkg/*/* | wc -l) ;;
 		'NixOS') pkgs=$(ls -d -1 /nix/store/*/ | wc -l) ;;
 		'GuixSD') pkgs=$(ls -d -1 /guix/store/*/ | wc -l) ;;
 		'Fedora'|'Fux'|'Korora'|'BLAG'|'Chapeau'|'openSUSE'|'SUSE Linux Enterprise'|'Red Hat Enterprise Linux'|'ROSA'|'Oracle Linux'|'CentOS'|'Mandriva'|'Mandrake'|'Mageia'|'Mer'|'SailfishOS'|'PCLinuxOS'|'Viperr'|'Qubes OS'|'Red Star OS'|'blackPanther OS') pkgs=$(rpm -qa | wc -l) ;;
@@ -3073,6 +3078,35 @@ asciiText () {
 "${c2}\`/${c1}ohdmmddhys+++/:${c2}.\`                  %s"
 "${c2}  \`-//////:--.                       %s")
 		;;
+
+		"cloveros")
+			if [[ "$no_color" != "1" ]]; then
+				c1=$(getColor 'green')
+				c2=$(getColor 'light green')
+				c3=$(getColor 'orange')
+			fi
+			if [ -n "${my_lcolor}" ]; then c1="${my_lcolor}"; c2="${my_lcolor}"; c3="${my_lcolor}"; fi
+			startline="0"
+			logowidth="48"
+			fulloutput=(
+"                  ${c1}/óù,áò\                       %s"
+"                ${c1}/ó#######ò\                     %s"
+"              ${c1}/ó###########ò\                   %s"
+"              ${c1}\V###########V/                   %s"
+"          ${c2}/i\ ${c1}  \V#######V/${c2}  /i\                %s"
+"        ${c2}/ó###ò\ ${c1}  \V###V/${c2}  /ó###ò\              %s"
+"      ${c2}/ó#######ò\ ${c1}  \V/${c2}  /ó#######ò\            %s"
+"     ${c2}/ó#########ò\ ${c3} ,X, ${c2}/ó#########ò\           %s"
+"     ${c2}>############ ${c3}X+++X ${c2}############<          %s"
+"     ${c2}\ó###########V/ ${c3}X ${c2}\V###########ò/          %s"
+"       ${c2}\V#######V/  ${c1}/i\  ${c2}\V#######V/            %s"
+"         ${c2}\V###V/  ${c1}/ó###ò\  ${c2}\V###V/              %s"
+"           ${c2}\p/  ${c1}/ó#######ò\  ${c2}\p/                %s"
+"              ${c1}/ó###########ò\                             %s"
+"              ${c1}\V###########V/                             %s"
+"                ${c1}\V#######V/                               %s"
+"                  ${c1}\V#,#V/                                 %s")
+		;;			
 
 		"Funtoo")
 			if [[ "$no_color" != "1" ]]; then
@@ -5337,7 +5371,10 @@ infoDisplay () {
 							myicons=$(echo -e "$labelcolor Icon Theme:$textcolor $gtkIcons"); out_array=( "${out_array[@]}" "$myicons" ); ((display_index++))
 						fi
 					fi
-					if [[ "$gtkFont" != "Not Applicable" && "$gtkFont" != "Not Found" ]]; then
+					if [[ "$gtkFont" != "Not Applicable" && "$gtkFont" != "
+
+
+" ]]; then
 						if [ -n "$gtkFont" ]; then
 							myfont=$(echo -e "$labelcolor Font:$textcolor $gtkFont"); out_array=( "${out_array[@]}" "$myfont" ); ((display_index++))
 						fi
